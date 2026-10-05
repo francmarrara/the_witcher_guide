@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""Genera build.html: build, abilità ed equipaggiamento per Marcia della Morte."""
+import pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+NAV = [("index.html","Guida"),("obiettivi.html","Obiettivi"),("build.html","Build Death March"),("contratti.html","Contratti"),("carte.html","Carte Gwent"),("gwent.html","Strategia Gwent"),("missioni.html","Missioni"),("dlc-finali.html","DLC & Finali")]
+def top(active):
+    links = "".join(f'<a href="{h}" class="{"active" if h==active else ""}">{l}</a>' for h, l in NAV)
+    return f"""<header class="topbar"><div class="topbar-in">
+<a class="brand" href="index.html"><span class="brand-mark">🐺</span><span><b>The Witcher 3 — Guida 100%</b><small>Wild Hunt · in italiano</small></span></a>
+<nav class="main">{links}</nav></div></header>"""
+FOOT = """<footer><div class="wrap">
+<p><b style="color:var(--cream)">The Witcher 3: Wild Hunt — Guida completa in italiano al 100% degli obiettivi.</b><br>
+Contenuti della walkthrough tradotti e adattati dalla guida di <b>Cynic 0055</b> (Cynical Guides) — fonte originale su Steam: <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3162226469" target="_blank" rel="noopener">steamcommunity.com/sharedfiles/?id=3162226469</a>.</p>
+<p>The Witcher è un marchio di CD PROJEKT RED. Sito non ufficiale creato per uso personale, senza immagini coperte da copyright.</p>
+</div></footer><button id="backtop" class="backtop" title="Torna su">↑</button><script src="assets/app.js"></script>"""
+
+page = f"""<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Build Marcia della Morte — abilità, set Witcher, alchimia — TW3</title>
+<meta name="description" content="Build per la difficoltà Marcia della Morte: Quen, Sun & Stars, Gourmet, set delle scuole witcher, alchimia, bombe, oli, mutageni e farming obiettivi.">
+<link rel="stylesheet" href="assets/styles.css"></head><body>{top('build.html')}<div class="wrap">
+<section class="hero"><p class="kicker">Sopravvivere alla Death March · dal livello 1 al Gran Maestro</p>
+<h1>⚔️ Build <span>Marcia della Morte</span></h1>
+<p>Tutti i consigli di build sparsi nella walkthrough, riuniti: la curva iniziale è dura, ma con livelli, set Witcher e alchimia diventa quasi facile. Mai abbassare la difficoltà o perdi <b>Walked the Path</b>.</p>
+<div class="cta"><a class="btn" href="#sopravvivenza">🛡️ Inizia dalle basi</a><a class="btn ghost" href="#farming">🌾 Farming obiettivi</a></div></section>
+<div class="layout"><aside class="sidebar"><h3>In questa pagina</h3><ol class="toc" style="list-style:none;padding:0">
+<li><a href="#sopravvivenza">Sopravvivenza</a></li><li><a href="#abilita">Prime abilità</a></li>
+<li><a href="#set">Set delle scuole</a></li><li><a href="#alchimia">Alchimia</a></li>
+<li><a href="#bombe">Bombe &amp; oli</a></li><li><a href="#segni">Segni in combattimento</a></li>
+<li><a href="#mutageni">Mutageni &amp; mutazioni</a></li><li><a href="#farming">Farming obiettivi</a></li>
+<li><a href="#armi-top">Armi top</a></li></ol></aside>
+<main class="content">
+
+<div class="intro-box" id="sopravvivenza"><p class="kicker">Regole d'oro</p><h2 style="color:var(--cream)">Sopravvivere a Marcia della Morte</h2>
+<ul>
+<li><b>Quen sempre attivo</b> — è il tuo pilastro: in combattimento deve essere su di continuo. Non spammare attacchi alla cieca: studia i nemici e combatti difensivo. (<a href="index.html#seq-1">Seq. 1</a>)</li>
+<li><b>Medidazione non cura</b> — a Marcia della Morte curano solo <b>cibo</b> e pozioni <b>Rondine (Swallow)</b>. Fai scorta di alimenti ad alta guarigione in ogni città.</li>
+<li><b>Salva spesso</b> — è facilissimo perdere progressi per incidenti in combattimento; salva dopo ogni punto d'interesse ripulito.</li>
+<li><b>Saccheggia tutto</b> — armi e cianfrusaglie si vendono, ma ti servirà una montagna di ingredienti per pozioni, bombe, oli e set di armature.</li>
+<li><b>Cibo + Rondine</b> prima dei boss duri (es. ondate di spettri del Botchling, <a href="index.html#seq-5">seq. 5</a>; Eredin, <a href="index.html#seq-31">seq. 31</a>).</li>
+</ul></div>
+
+<div class="intro-box" id="abilita"><p class="kicker">Primi punti abilità</p><h2 style="color:var(--cream)">Prime abilità da prendere</h2>
+<ul>
+<li><b>Luoghi di Potere = punti gratis</b> — ogni Luogo nuovo dà 1 punto abilità: usali sempre. A White Orchard ce ne sono 6 (uno doppio): per <b>Power Overwhelming</b> visitali tutti in 30 minuti partendo dal più a nord a cavallo — attento all'orso di livello 6. (<a href="index.html#seq-2">Seq. 2</a>)</li>
+<li><b>Sun &amp; Stars</b> (scheda Generale) — rigenerazione passiva di vitalità: fondamentale a inizio gioco. (<a href="index.html#seq-2">Seq. 2</a>)</li>
+<li><b>Gourmet</b> (scheda Generale) — il cibo dura molto di più: altra scelta top early-game. (<a href="index.html#seq-2">Seq. 2</a>)</li>
+<li><b>Dendrologist (liv. 20+)</b> — con i punti dei Luoghi di Potere resettati via Pozione del Chiarore puoi comprare tutte le 20 abilità di un albero (23 punti totali, non serve potenziarle al massimo). Gremist a Skellige vende ben 8 Pozioni del Chiarore. (<a href="index.html#seq-16">Seq. 16</a>)</li>
+</ul></div>
+
+<div class="intro-box" id="set"><p class="kicker">Armature &amp; spade</p><h2 style="color:var(--cream)">Set delle scuole Witcher</h2>
+<ul>
+<li><b>Grifone (segni)</b> — le due mappe di <b>Edwin Greloff</b> le vende l'armaiolo di Midcopse: rivelano tutti e 6 i pezzi. La caccia al tesoro parte a Hindhold (Endrega + nido in cima). (<a href="index.html#seq-6">Seq. 6</a>, <a href="index.html#seq-16">seq. 16</a>)</li>
+<li><b>Orso/Ursine (pesante)</b> — il diagramma della Spada d'acciaio Ursina (Mastercrafted) è nella caverna dell'orso di livello 6 dove ti porta Princess. (<a href="index.html#seq-5">Seq. 5</a>)</li>
+<li><b>Armed &amp; Dangerous</b> — trova ed equipaggia tutti i pezzi di un set Witcher (es. set del Grifone completo). (<a href="index.html#seq-11">Seq. 11</a>)</li>
+<li><b>Gran Maestro (30 diagrammi)</b> — missione <b>Master, Master, Master, Master!</b> dalla bacheca + bottega di Lafargue: indicatori per tutti i pezzi di Lupo, Gatto, Grifone, Orso e <b>Manticore</b>. (<a href="index.html#seq-39">Seq. 39</a>)</li>
+<li><b>Dressed to Kill</b> — basta craftare <b>un solo</b> set Gran Maestro completo (corazza, guanti, pantaloni, stivali, 2 spade): il più facile ed economico è il <b>Manticore</b> (conta come Gran Maestro anche se non lo dice nel nome). L'Ursine Gran Maestro può costare ~50.000 corone di Dimeritium. (<a href="index.html#seq-42">Seq. 42</a>)</li>
+<li><b>Ofieri (Hearts of Stone)</b> — dal mercante Ofieri: Sciabola decorata (~1300), Tunica (~1000), paraocchi + bisacce (~250 l'una), poi diagrammi di stivali/guanti/sharovary dal fabbro per <b>I Wore Ofieri Before It Was Cool</b>. Niente balestra Ofieri: non serve. (<a href="index.html#seq-32">Seq. 32</a>)</li>
+</ul></div>
+
+<div class="intro-box" id="alchimia"><p class="kicker">Pozioni · decotti · tossicità</p><h2 style="color:var(--cream)">Alchimia</h2>
+<ul>
+<li><b>Rondine + Tuono (Thunderbolt)</b> — la combo standard prima degli scontri duri; le versioni monouso extra si ottengono anche a Kaer Morhen scegliendo le pozioni di Vesemir. (<a href="index.html#seq-29">Seq. 29</a>)</li>
+<li><b>Let's Cook!</b> — impara 12 formule di pozioni: esplora tutti i ? e compra le formule da erboristi e mercanti già a White Orchard. (<a href="index.html#seq-2">Seq. 2</a>)</li>
+<li><b>Pozione del Chiarore</b> — resetta i punti abilità: Keira ne vende una a 1000 corone (fan ne scorta almeno 2), Gremist ne ha 8. Indispensabile per Dendrologist e per il farming. (<a href="index.html#seq-9">Seq. 9</a>, <a href="index.html#seq-16">seq. 16</a>)</li>
+<li><b>Can Quit Anytime I Want (7 pozioni/decotti insieme)</b> — servono Metabolic Control + Acquired Tolerance + Heightened Tolerance al 3 (soglia tossicità 150–200). Esempio da 150: Rondine (20) + Tuono (25) + Gatto (15) + Blizzard (20) + Foresta di Maribor (20) + Oriolo Dorato (25) + Filtro di Petri (25). I decotti (min. 50 tossicità) sono meno convenienti. (<a href="index.html#seq-35">Seq. 35</a>)</li>
+<li><b>Decotti utili</b> — Ancient Leshen + Katakan contro Eredin (scontro senza checkpoint); Ancient Leshen + Allocco Reale per rigenerare stamina in fretta durante il farming. (<a href="index.html#seq-31">Seq. 31</a>, <a href="index.html#seq-35">seq. 35</a>)</li>
+</ul></div>
+
+<div class="intro-box" id="bombe"><p class="kicker">Bombe · oli · balestra</p><h2 style="color:var(--cream)">Bombe, oli e balestra</h2>
+<ul>
+<li><b>Bombardier</b> — raccogli 6 formule di bombe su 8 (erboristi + bauli); c'è un erborista oltre il fiume verso Oxenfurt che le ha tutte. (<a href="index.html#seq-6">Seq. 6</a>)</li>
+<li><b>Fire in the Hole</b> — distruggi 10 nidi con le bombe (3 già a White Orchard). (<a href="index.html#seq-10">Seq. 10</a>)</li>
+<li><b>Triple Threat</b> — 3 uccisioni con 3 metodi diversi in un combattimento: il trio facile è Spada d'acciaio + Grapeshot + Igni (indebolisci e finisci con metodi diversi). (<a href="index.html#seq-6">Seq. 6</a>)</li>
+<li><b>Overkill</b> — Sanguinamento + Veleno + Fuoco sullo stesso nemico ×10: spade con rune <b>Devana</b> (o spade del Gatto, sanguinamento integrato) + Bomba Palla del Diavolo (veleno) + Stella Danzante/Igni (fuoco). (<a href="index.html#seq-30">Seq. 30</a>)</li>
+<li><b>Oli</b> — prepara sempre l'olio giusto dal bestiario (es. olio contro le bestie per il “Re dei Lupi”); ma per <b>Even Odds</b> vietati oli, segni, pozioni, bombe e mutageni (balestra ok). (<a href="index.html#seq-2">Seq. 2</a>)</li>
+<li><b>Balestra</b> — la <b>Ursine Crossbow</b> è tra le migliori; con Lightning Reflexes + Anatomical Knowledge + Steady Shot (+ Trick Shot) fai 50 headshot per <b>Master Marksman</b> e l'occhio di Golyat per <b>David &amp; Golyat</b>. Togli le spade durante il farming per non rubare kill. (<a href="index.html#seq-36">Seq. 36</a>)</li>
+</ul></div>
+
+<div class="intro-box" id="segni"><p class="kicker">Controllo del campo</p><h2 style="color:var(--cream)">Segni: come usarli</h2>
+<ul>
+<li><b>Quen</b> — sempre attivo, è la tua vita in più. L'unico obiettivo che lo vieta è <b>Can't Touch This!</b> (5 uccisioni senza danni e senza Quen). (<a href="index.html#seq-8">Seq. 8</a>)</li>
+<li><b>Yrden</b> — intrappola la Raminga del Mezzogiorno per renderla corporea (Devil by the Well). (<a href="index.html#seq-2">Seq. 2</a>)</li>
+<li><b>Axii + Puppet</b> — Puppet (liv. 3) forza un nemico a ucciderne un altro: ×20 per <b>The Enemy of My Enemy</b>. (<a href="index.html#seq-35">Seq. 35</a>)</li>
+<li><b>Aard</b> — Far Reaching + Aard Sweep per <b>Humpty Dumpty</b> (10 nemici scaraventati giù da un dirupo); Aard in aria contro la Strega del mondo delle fiabe. (<a href="index.html#seq-35">Seq. 35</a>, <a href="index.html#seq-43">seq. 43</a>)</li>
+<li><b>Igni</b> — accende il gas delle bombe <b>Dragon's Dream</b> (×10 per <b>That Is the Evilest Thing…</b>). (<a href="index.html#seq-10">Seq. 10</a>)</li>
+</ul></div>
+
+<div class="intro-box" id="mutageni"><p class="kicker">Slot · mutazioni</p><h2 style="color:var(--cream)">Mutageni e mutazioni (B&amp;W)</h2>
+<ul>
+<li><b>Mutant</b> — il 4° slot mutageni si sblocca al <b>livello 28</b>: riempili tutti. (<a href="index.html#seq-26">Seq. 26</a>)</li>
+<li><b>Weapon “W”</b> — sviluppa una mutazione (Sensibilità Magica, Contatore Mortale o Sangue Tossico: servono 2 punti abilità liberi + 2 mutageni maggiori del colore giusto). Salva prima: potresti voler ricaricare dopo l'obiettivo. (<a href="index.html#seq-39">Seq. 39</a>)</li>
+</ul></div>
+
+<div class="intro-box" id="farming"><p class="kicker">Spot dei pirati · seq. 35–36</p><h2 style="color:var(--cream)">Setup per il farming obiettivi</h2>
+<p>Dopo il gioco base, per recuperare gli obiettivi grind la guida consiglia: una <b>Pozione del Chiarore</b> per la build da farming + una seconda per tornare alla build normale, e difficoltà <b>Just the Story!</b> (tanto la Death March è già battuta).</p>
+<table><tr><th>Abilità da farming (12)</th><th>A cosa serve</th></tr>
+<tr><td>Combattimento: Arrow Deflection 2, Lightning Reflexes 1, Anatomical Knowledge 3</td><td>Master Marksman, David &amp; Golyat</td></tr>
+<tr><td>Segni: Delusion 3, Puppet 3, Far-Reaching Aard 3, Aard Sweep 3</td><td>The Enemy of My Enemy, Humpty Dumpty</td></tr>
+<tr><td>Alchimia: Heightened Tolerance 3, Acquired Tolerance 3</td><td>Can Quit Anytime I Want</td></tr>
+<tr><td>Generali: Metabolic Control 1, Steady Shot 1, Trick Shot 1</td><td>Soglia tossicità, headshot, bersagli del torneo</td></tr></table>
+<p>Spot: i <b>pirati rigeneranti</b> della costa (<a href="index.html#seq-36">seq. 36</a>) — buoni anche per recuperare Triple Threat, Can't Touch This!, Kaer Morhen Trained, That Is the Evilest Thing e Overkill. A fine farming: <b>riporta difficoltà e build originali</b> con la seconda Pozione del Chiarore.</p></div>
+
+<div class="intro-box" id="armi-top"><p class="kicker">Il meglio del meglio</p><h2 style="color:var(--cream)">Armi da non perdere</h2>
+<ul>
+<li><b>Aerondight</b> — dalla Dama del Lago (5 virtù completate): senza dubbio la <b>spada d'argento più forte del gioco</b>, con danno che cresce con le uccisioni. (<a href="index.html#seq-41">Seq. 41</a>)</li>
+<li><b>Ursine Crossbow</b> — la migliore balestra per headshot e Golyat. (<a href="index.html#seq-36">Seq. 36</a>)</li>
+<li><b>Rune Devana / Morana / Dazhbog</b> — sanguinamento, veleno e fuoco dalle spade per Overkill; rune del Gatto come alternativa. (<a href="index.html#seq-30">Seq. 30</a>)</li>
+<li><b>Kaer Morhen</b> — scegliendo l'armeria ottieni una nuova spada d'argento; con le pozioni di Vesemir ottieni Rondine + Tuono extra. (<a href="index.html#seq-29">Seq. 29</a>)</li>
+</ul></div>
+
+</main></div></div>{FOOT}</body></html>"""
+
+(ROOT/"build.html").write_text(page, encoding="utf-8")
+print("build.html scritta:", len(page), "bytes")
